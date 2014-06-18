@@ -1,0 +1,70 @@
+// Solving the Lotka coupled autocatalytic reactions. 
+// X bar + Y1 -> 2Y1
+// Y1 + Y2 -> 2Y2 
+// Y2 -> Z 
+
+// any component in bar represents that it is present in the system in abundance.
+// will deal with 2 components here, y1 and y2 
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<math.h>
+
+int main()
+{
+float a[3],a0,c1,c2,c3,r1,r2,tau,t,m ; 
+int i,rxn,p,j,n,y1,y2;
+FILE *fp ; 
+fp = fopen("curve2.txt","w");
+t = 0 ; 
+m = 3 ; 
+n = 0 ; 
+y1 = 1000;
+y2 = 1000;
+for(i=0;i<=10000;i++)
+{
+a[0] = 10*y1;
+a[1] = 0.01*y1*y2;
+a[2] = 10*y2 ;
+a0 = a[0] + a[1] + a[2];
+
+p = rand()%100 ;
+if(p==0){ p = rand()%100 ; }
+r1 = p/100.0; 
+tau = (1/a0)*log(1/r1);
+
+p = rand()%100 ;
+if(p==0){ p = rand()%100 ; }
+r2 = p/100.0; 
+if((r2>0)&&(r2<a[0]/a0)){ rxn = 1; } 
+else if((r2>a[0]/a0)&&(r2<(a[0]+a[1])/a0)) { rxn = 2; } 
+else if((r2>(a[0]+a[1])/a0)&&(r2<1)) { rxn = 3; }
+
+if(rxn == 1){
+y1 = y1 + 1; 
+t = t + tau; 
+n = n + 1;
+fprintf(fp,"%d \t %d \t %f \t %f \t %d \t %d \t %d %f \t %f \t %f \t %f \n ",y1,y2,t,tau,i,n,1,r1,r2,a[0]/a0,((a[0]+a[1])/a0));
+}
+
+else if(rxn ==2){ 
+y1 = y1 - 1;
+y2 = y2 + 1;
+t = t + tau;
+n = n + 1;
+fprintf(fp,"%d \t %d \t %f \t %f \t %d \t %d \t %d %f \t %f \t %f \t %f \n ",y1,y2,t,tau,i,n,2,r1,r2,a[0]/a0,((a[0]+a[1])/a0));
+}
+
+else if(rxn == 3 ){ 
+y2 = y2 - 1;
+t = t + tau;
+n = n + 1;
+fprintf(fp,"%d \t %d \t %f \t %f \t %d \t %d \t %d %f \t %f \t %f \t %f \n ",y1,y2,t,tau,i,n,3,r1,r2,a[0]/a0,((a[0]+a[1])/a0));
+}
+
+}
+
+
+
+}
+

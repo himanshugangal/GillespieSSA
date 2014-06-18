@@ -1,0 +1,3 @@
+//  Rate at which such collisions are occuring DeltaV(coll) = pi*r12*r12*v12*Deltat , as in that if the center of molecule 2 is anywhere in this column around molecule 1 they will collide. Now estimate how many of molecules 2 will lie in thie region around molecule 1, and then devide by Deltat and then put the condition of delta t to be tending to 0. But in this limiting condition, it is physically pointless to say if there is any molecule inside that small volume so we take a different approach. 
+
+// Now, since the system is in thermal equillibrium, we can imagine that all the molecules be uniformly distributed. So the probability that an arbitary S2 molecule lies in the DeltaV region is given by DeltaV/V. So, DeltaV/V = pi*r12*r12*v12*Deltat/DeltaV 

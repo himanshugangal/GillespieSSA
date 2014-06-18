@@ -1,0 +1,36 @@
+// Solving the radioactive isomerization stochastically X -> Z .
+#include<stdio.h>
+#include<stdlib.h>
+#include<math.h>
+int main()
+{
+float a,a1,r,c,t,tau;
+int n,x,x0;
+int i,p;
+c = 0.5;
+x0 = 1000;
+x = x0;
+a1 = x0*c;
+a = a1; 
+n = 1;
+t = 0;
+p = rand()%100 ;
+r = p/100.0; 
+tau = (1/a)*log(1/r);
+printf("%f \t %f \t %f \t %d \t %f ", tau,t,a,p,r);
+FILE *fp;
+fp = fopen("Curve.txt","w");
+
+for(i=0;;i++){
+x = x - 1 ; 
+t = t + tau;
+p = rand()%100 ;
+if(p==0){ p=rand()%100 ; }
+r = p/100.0; 
+tau = (1/a)*log(1/r);
+a = x*c;
+fprintf(fp,"%d \t %f \t %f \t %d \n ",x,t,tau,i);
+if(x==0) {break;}
+}
+
+}
